@@ -1,0 +1,90 @@
+<header th:fragment="navbar" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"><nav class="navbar navbar-expand-lg bg-black text-white navbar-main">
+        <div class="container-fluid">
+            <a class="navbar-brand text-white" href="/">PERFUME SHOP</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Left-aligned menu -->
+            <div class="collapse navbar-collapse text-white" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" aria-current="page" href="/">
+                            HOME
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/perfumes">
+                            PERFUMES
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Right-aligned menu -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <th:block sec:authorize="isAuthenticated()">
+                        <li class="nav-item">
+                            <a class="nav-link pl-5 text-white" href="/cart">
+                                <i class="fas fa-shopping-cart mr-2"></i>
+                                CART
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-5 text-white" href="/account">
+                                <i class="fas fa-user mr-2"></i>
+                                MY ACCOUNT
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-5 text-white" href="/logout">
+                                <i class="fas fa-sign-out-alt mr-2"></i>
+                                EXIT
+                            </a>
+                        </li>
+                    </th:block>
+
+                    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                ADMIN
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item text-white" href="/admin/users">Users Management</a></li>
+                                <li th:block sec:authorize="hasRole('ROLE_SUPER_ADMIN')">
+                                    <a class="dropdown-item text-white" href="/admin/superAdmin/admins">
+                                        Admins Management
+                                    </a>
+                                </li>
+                                <li><a class="dropdown-item text-white" href="/admin/perfumes">Perfumes Management</a></li>
+                                <li><a class="dropdown-item text-white" href="/admin/perfume/add">Add New Perfume</a></li>
+                            </ul>
+                        </li>
+                    </th:block>
+
+                    <th:block sec:authorize="!isAuthenticated()">
+                        <li class="nav-item">
+                            <a class="nav-link pl-5 text-white" href="/login">
+                                <i class="fas fa-sign-in-alt mr-2"></i>
+                                LOGIN
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-5 text-white" href="/registration">
+                                <i class="fas fa-user-plus mr-2"></i>
+                                REGISTRATION
+                            </a>
+                        </li>
+                    </th:block>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<footer th:fragment="footer" class="footer mt-auto py-3 bg-black text-white">
+    <div class="container text-center">
+        <span class="text-white">© 2024 Perfume Shop</span>
+    </div>
+</footer>

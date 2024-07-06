@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Perfume Shop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <style>
+    </style>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+<header th:replace="~{fragments/common-fragments :: navbar}"></header>
+
+<div class="container mt-4 mb-5">
+    <h1>CHOOSE THE BEST</h1>
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src='/images/perfumes/carousel/pomigranates.jpg' class="card-img-top" alt="img">
+            </div>
+            <div class="carousel-item">
+                <img src='/images/perfumes/carousel/roses.jpg' class="card-img-top" alt="img">
+            </div>
+            <div class="carousel-item">
+                <img src='/images/perfumes/carousel/chanel.jpg' class="card-img-top" alt="img">
+            </div>
+            <div class="carousel-item">
+                <img src='/images/perfumes/carousel/dior.jpg' class="card-img-top" alt="img">
+            </div>
+            <div class="carousel-item">
+                <img src='/images/perfumes/carousel/tomFord.jpg' class="card-img-top" alt="img">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div class="mt-5">
+        <h1>BESTSELLERS</h1>
+        <div class="row flex-nowrap overflow-auto" id="products">
+            <div class="col-4 text-center">
+                <a th:href="@{/perfumes/perfume/39}" class="text-decoration-none">
+                    <div class="card">
+                        <img src='/images/perfumes/TomFordVanillaSex.png' class="card-img-top" alt="Product Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Tom Ford</h5><br>
+                            <h4 class="card-title">Vanilla Sex</h4>
+                            <p class="card-text"><small class="text-muted">In Stock</small></p>
+                            <p class="card-text"><small class="text-muted">Volume: 50ml</small></p><br>
+                            <h4 class="card-footer">$358.06</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-4 text-center">
+                <a th:href="@{/perfumes/perfume/3}" class="text-decoration-none">
+                    <div class="card">
+                        <img src='/images/perfumes/GivencyIrresistible.png' class="card-img-top" alt="Product Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Givency</h5><br>
+                            <h4 class="card-title">Irresistible</h4>
+                            <p class="card-text"><small class="text-muted">In Stock</small></p>
+                            <p class="card-text"><small class="text-muted">Volume: 35ml</small></p><br>
+                            <h4 class="card-footer">$91.68</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-4 text-center">
+                <a th:href="@{/perfumes/perfume/18}" class="text-decoration-none">
+                    <div class="card">
+                        <img src='/images/perfumes/DiorSauvage.png' class="card-img-top" alt="Product Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Dior</h5><br>
+                            <h4 class="card-title">Sauvage</h4>
+                            <p class="card-text"><small class="text-muted">In Stock</small></p>
+                            <p class="card-text"><small class="text-muted">Volume: 100ml</small></p><br>
+                            <h4 class="card-footer">$251.64</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-4 text-center">
+                <a th:href="@{/perfumes/perfume/10}" class="text-decoration-none">
+                    <div class="card">
+                        <img src='/images/perfumes/ChanelN°5EauPremiereSpray.png' class="card-img-top" alt="Product Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Chanel</h5><br>
+                            <h4 class="card-title">N°5 Eau Premiere Spray</h4>
+                            <p class="card-text"><small class="text-muted">In Stock</small></p>
+                            <p class="card-text"><small class="text-muted">Volume: 100ml</small></p><br>
+                            <h4 class="card-footer">$221.11</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-4 text-center">
+                <a th:href="@{/perfumes/perfume/26}" class="text-decoration-none">
+                    <div class="card">
+                        <img src='/images/perfumes/GivencyGentlemanBoisee.png' class="card-img-top" alt="Product Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Givency</h5><br>
+                            <h4 class="card-title">Gentleman Boisee</h4>
+                            <p class="card-text"><small class="text-muted">In Stock</small></p>
+                            <p class="card-text"><small class="text-muted">Volume: 200ml</small></p><br>
+                            <h4 class="card-footer">$195.30</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-cols-3 no-gutters mt-5">
+        <div class="col text-center p-0">
+            <img src="/images/perfumes/bottom/first.png" alt="Image 1" style="width: 100%;">
+        </div>
+        <div class="col text-center p-0">
+            <img src="/images/perfumes/bottom/middle.png" alt="Image 2" style="width: 100%;">
+        </div>
+        <div class="col text-center p-0">
+            <img src="/images/perfumes/bottom/last.png" alt="Image 3" style="width: 100%;">
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/common-fragments :: footer}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
