@@ -111,12 +111,14 @@ Restriction of access to the admin panel depends on the roles. (Hierarchy of rol
     <tr>
       <th>Shopping Cart</th>
       <th>Ordering</th>
+      <th>Paying</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><img src="https://github.com/VictoriaBabchenko1/PerfumeOnlineShop/blob/master/screenshots/ShoppingCart.png" alt="ShoppingCart" width="300"/></td>
       <td><img src="https://github.com/VictoriaBabchenko1/PerfumeOnlineShop/blob/master/screenshots/Ordering.png" alt="Ordering" width="300"/></td>
+      <td><img src="https://github.com/VictoriaBabchenko1/PerfumeOnlineShop/blob/master/screenshots/Paying.png" alt="Paying" width="300"/></td>
     </tr>
   </tbody>
 </table>
