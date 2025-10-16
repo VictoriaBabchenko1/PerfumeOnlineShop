@@ -7,7 +7,9 @@ import org.ecommerce.onlineshop.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -71,6 +73,24 @@ public class CartService {
         }
 
         userRepository.save(user);
+    }
+
+    public Map<String, Object> updateAndGetCartSummary(Long userId, Long itemId, Integer quantity) {
+        updateCartItem(userId, itemId, quantity);
+
+        List<CartItem> cartItems = getCartItems(userId);
+        BigDecimal total = calculateTotalPrice(cartItems);
+
+        Map<Long, BigDecimal> itemTotals = new HashMap<>();
+        for (CartItem item : cartItems) {
+            itemTotals.put(item.getId(), item.getPrice());
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("total", total);
+        response.put("itemTotals", itemTotals);
+
+        return response;
     }
 
     public void removeCartItem(Long userId, Long itemId) {

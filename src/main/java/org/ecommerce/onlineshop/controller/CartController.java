@@ -12,9 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class CartController {
@@ -70,14 +72,13 @@ public class CartController {
     }
 
     @PostMapping("/cart/update")
-    public String updateCartItem(@RequestParam("itemId") Long itemId,
+    @ResponseBody
+    public Map<String, Object> updateCartItem(@RequestParam("itemId") Long itemId,
                                  @RequestParam("quantity") Integer quantity) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         Long userId = userService.findUserIdByUsername(currentPrincipalName);
 
-        cartService.updateCartItem(userId, itemId, quantity);
-
-        return "redirect:/cart";
+        return cartService.updateAndGetCartSummary(userId, itemId, quantity);
     }
 }
