@@ -22,7 +22,7 @@ val stripeVersion = "4.2.0"
 
 dependencies {
     testImplementation (enforcedPlatform("org.junit:junit-bom:$junitVersion"))
-    testImplementation (enforcedPlatform("org.mockito:mockito-2bom:$mockitoVersion"))
+    testImplementation (enforcedPlatform("org.mockito:mockito-bom:$mockitoVersion"))
 
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.mockito:mockito-core")
