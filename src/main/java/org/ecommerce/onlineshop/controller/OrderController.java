@@ -4,8 +4,10 @@ import com.stripe.exception.StripeException;
 import org.ecommerce.onlineshop.domain.CartItem;
 import org.ecommerce.onlineshop.domain.ChargeRequest;
 import org.ecommerce.onlineshop.domain.Order;
+import org.ecommerce.onlineshop.domain.PaymentStatus;
 import org.ecommerce.onlineshop.service.CartService;
 import org.ecommerce.onlineshop.service.OrderService;
+import org.ecommerce.onlineshop.service.PaymentService;
 import org.ecommerce.onlineshop.service.StripeService;
 import org.ecommerce.onlineshop.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,13 +30,19 @@ public class OrderController {
     @Value("${STRIPE_PUBLIC_KEY}")
     private String stripePublicKey;
     private final StripeService paymentsService;
+    private final PaymentService paymentService;
     private final CartService cartService;
 
-    public OrderController(OrderService orderService, UserService userService, StripeService stripeService, CartService cartService) {
+    public OrderController(OrderService orderService,
+                           UserService userService,
+                           StripeService stripeService,
+                           CartService cartService,
+                           PaymentService paymentService) {
         this.orderService = orderService;
         this.userService = userService;
         this.paymentsService = stripeService;
         this.cartService = cartService;
+        this.paymentService = paymentService;
     }
 
     @GetMapping("/order/fillForm")
@@ -62,10 +70,13 @@ public class OrderController {
 
         chargeRequest.setDescription("charge");
         chargeRequest.setCurrency(ChargeRequest.Currency.USD);
-        paymentsService.charge(chargeRequest);
 
         try {
+            paymentsService.charge(chargeRequest);
+
             Order order = orderService.createOrder(userId, firstName, lastName, city, email, phoneNumber, postIndex);
+            paymentService.createPayment(order, order.getTotal(), PaymentStatus.COMPLETED);
+
             model.addAttribute("order", order);
             return "orderResult";
         } catch (Exception e) {

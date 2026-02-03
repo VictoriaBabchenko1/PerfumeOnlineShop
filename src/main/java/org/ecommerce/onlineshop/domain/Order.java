@@ -5,10 +5,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -27,6 +30,9 @@ public class Order {
 
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime dateTime;
+
+    @OneToMany(mappedBy = "order")
+    private List<Payment> payments = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -106,5 +112,13 @@ public class Order {
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public List<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
     }
 }
