@@ -3,6 +3,7 @@ package org.ecommerce.onlineshop.service;
 import org.ecommerce.onlineshop.domain.CartItem;
 import org.ecommerce.onlineshop.domain.Order;
 import org.ecommerce.onlineshop.domain.OrderItem;
+import org.ecommerce.onlineshop.domain.OrderStatus;
 import org.ecommerce.onlineshop.exeptions.FieldValidationException;
 import org.ecommerce.onlineshop.repository.OrderRepository;
 import org.ecommerce.onlineshop.utils.FieldsValidationUtils;
@@ -47,6 +48,7 @@ public class OrderService {
         order.setPostIndex(Integer.parseInt(postIndex));
         order.setTotal(total);
         order.setDateTime(LocalDateTime.now());
+        order.setStatus(OrderStatus.NEW);
 
         for (CartItem cartItem : cartItems) {
             OrderItem orderItem = new OrderItem();
@@ -67,6 +69,17 @@ public class OrderService {
     }
 
     public List<Order> getOrdersByUserId(Long userId) {
-        return orderRepository.findByUserId(userId);
+        return orderRepository.findByUserIdOrderByDateTimeDesc(userId);
+    }
+
+    public List<Order> getAllOrdersSortedByDateDesc() {
+        return orderRepository.findAllByOrderByDateTimeDesc();
+    }
+
+    public void updateOrderStatus(Long orderId, OrderStatus status) {
+        Order order = orderRepository.findById(orderId)
+            .orElseThrow(() -> new IllegalArgumentException("Order not found"));
+        order.setStatus(status);
+        orderRepository.save(order);
     }
 }

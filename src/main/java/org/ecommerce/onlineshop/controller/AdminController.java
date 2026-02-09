@@ -1,7 +1,9 @@
 package org.ecommerce.onlineshop.controller;
 
 import org.ecommerce.onlineshop.domain.Perfume;
+import org.ecommerce.onlineshop.domain.OrderStatus;
 import org.ecommerce.onlineshop.service.PerfumeService;
+import org.ecommerce.onlineshop.service.OrderService;
 import org.ecommerce.onlineshop.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +18,12 @@ import java.math.BigDecimal;
 public class AdminController {
     private final UserService userService;
     private final PerfumeService perfumeService;
+    private final OrderService orderService;
 
-    public AdminController(UserService userService, PerfumeService perfumeService) {
+    public AdminController(UserService userService, PerfumeService perfumeService, OrderService orderService) {
         this.userService = userService;
         this.perfumeService = perfumeService;
+        this.orderService = orderService;
     }
 
     @GetMapping("/admin/perfumes")
@@ -27,6 +31,26 @@ public class AdminController {
         model.addAttribute("perfumes", perfumeService.getAllPerfumes());
 
         return "admin-perfumes";
+    }
+
+    @GetMapping("/admin/orders")
+    public String showAllOrders(Model model) {
+        model.addAttribute("orders", orderService.getAllOrdersSortedByDateDesc());
+        model.addAttribute("statuses", OrderStatus.values());
+
+        return "admin-orders";
+    }
+
+    @PostMapping("/admin/orders/update-status")
+    public String updateOrderStatus(@RequestParam Long orderId,
+                                    @RequestParam String status,
+                                    Model model) {
+        orderService.updateOrderStatus(orderId, OrderStatus.valueOf(status));
+        model.addAttribute("message", "Order " + orderId + " status updated to " + status);
+        model.addAttribute("orders", orderService.getAllOrdersSortedByDateDesc());
+        model.addAttribute("statuses", OrderStatus.values());
+
+        return "admin-orders";
     }
 
     @PostMapping("/admin/perfumes/delete")
