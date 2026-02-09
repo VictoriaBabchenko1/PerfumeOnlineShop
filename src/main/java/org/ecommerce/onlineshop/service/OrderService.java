@@ -2,6 +2,7 @@ package org.ecommerce.onlineshop.service;
 
 import org.ecommerce.onlineshop.domain.CartItem;
 import org.ecommerce.onlineshop.domain.Order;
+import org.ecommerce.onlineshop.domain.OrderItem;
 import org.ecommerce.onlineshop.exeptions.FieldValidationException;
 import org.ecommerce.onlineshop.repository.OrderRepository;
 import org.ecommerce.onlineshop.utils.FieldsValidationUtils;
@@ -46,6 +47,18 @@ public class OrderService {
         order.setPostIndex(Integer.parseInt(postIndex));
         order.setTotal(total);
         order.setDateTime(LocalDateTime.now());
+
+        for (CartItem cartItem : cartItems) {
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
+            orderItem.setPerfumeId(cartItem.getPerfumeId());
+            orderItem.setQuantity(cartItem.getQuantity());
+            orderItem.setPrice(cartItem.getPrice());
+            orderItem.setPerfumeTitle(cartItem.getPerfumeTitle());
+            orderItem.setPerfumeBrand(cartItem.getPerfumeBrand());
+            orderItem.setPerfumeVolume(cartItem.getPerfumeVolume());
+            order.getOrderItems().add(orderItem);
+        }
 
         orderRepository.save(order);
         cartService.clearCart(userId);
