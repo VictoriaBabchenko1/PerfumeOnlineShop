@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OrderService {
@@ -81,5 +83,36 @@ public class OrderService {
             .orElseThrow(() -> new IllegalArgumentException("Order not found"));
         order.setStatus(status);
         orderRepository.save(order);
+    }
+    
+    public Long getTotalOrdersCount() {
+        return orderRepository.count();
+    }
+    
+    public BigDecimal getTotalRevenueFromOrders() {
+        BigDecimal completed = orderRepository.sumTotalByStatus(OrderStatus.COMPLETED);
+        return completed != null ? completed : BigDecimal.ZERO;
+    }
+    
+    public BigDecimal getAverageOrderValue() {
+        BigDecimal avg = orderRepository.averageTotalByStatus(OrderStatus.COMPLETED);
+        return avg != null ? avg : BigDecimal.ZERO;
+    }
+    
+    public Map<OrderStatus, Long> getOrderCountsByStatus() {
+        Map<OrderStatus, Long> counts = new HashMap<>();
+        for (OrderStatus status : OrderStatus.values()) {
+            counts.put(status, orderRepository.countByStatus(status));
+        }
+        return counts;
+    }
+    
+    public Map<OrderStatus, BigDecimal> getOrderAmountsByStatus() {
+        Map<OrderStatus, BigDecimal> amounts = new HashMap<>();
+        for (OrderStatus status : OrderStatus.values()) {
+            BigDecimal amount = orderRepository.sumTotalByStatus(status);
+            amounts.put(status, amount != null ? amount : BigDecimal.ZERO);
+        }
+        return amounts;
     }
 }

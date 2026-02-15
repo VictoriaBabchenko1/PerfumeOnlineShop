@@ -5,7 +5,6 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!-- Left-aligned menu -->
             <div class="collapse navbar-collapse text-white" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
@@ -57,6 +56,11 @@
                                         Admins Management
                                     </a>
                                 </li>
+                                <li th:block sec:authorize="hasRole('ROLE_SUPER_ADMIN')">
+                                    <a class="dropdown-item text-white" href="/admin/superAdmin/finance">
+                                       Finance & Reports
+                                    </a>
+                                </li>
                                 <li><a class="dropdown-item text-white" href="/admin/perfumes">Perfumes Management</a></li>
                                 <li><a class="dropdown-item text-white" href="/admin/perfume/add">Add New Perfume</a></li>
                                 <li><a class="dropdown-item text-white" href="/admin/orders">Orders Management</a></li>
@@ -86,6 +90,6 @@
 
 <footer th:fragment="footer" class="footer mt-auto py-3 bg-black text-white">
     <div class="container text-center">
-        <span class="text-white">© 2024 Perfume Shop</span>
+        <span class="text-white">© 2026 Perfume Shop</span>
     </div>
 </footer>

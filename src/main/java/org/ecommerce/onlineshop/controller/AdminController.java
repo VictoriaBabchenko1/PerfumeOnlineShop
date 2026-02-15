@@ -4,6 +4,7 @@ import org.ecommerce.onlineshop.domain.Perfume;
 import org.ecommerce.onlineshop.domain.OrderStatus;
 import org.ecommerce.onlineshop.service.PerfumeService;
 import org.ecommerce.onlineshop.service.OrderService;
+import org.ecommerce.onlineshop.service.PaymentService;
 import org.ecommerce.onlineshop.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,11 +20,13 @@ public class AdminController {
     private final UserService userService;
     private final PerfumeService perfumeService;
     private final OrderService orderService;
+    private final PaymentService paymentService;
 
-    public AdminController(UserService userService, PerfumeService perfumeService, OrderService orderService) {
+    public AdminController(UserService userService, PerfumeService perfumeService, OrderService orderService, PaymentService paymentService) {
         this.userService = userService;
         this.perfumeService = perfumeService;
         this.orderService = orderService;
+        this.paymentService = paymentService;
     }
 
     @GetMapping("/admin/perfumes")
@@ -163,5 +166,29 @@ public class AdminController {
         model.addAttribute("admins", userService.allAdmins());
 
         return "superAdmin-allAdmins";
+    }
+    
+    @GetMapping("/admin/superAdmin/finance")
+    public String showFinancePage(Model model) {
+        Long totalOrders = orderService.getTotalOrdersCount();
+        BigDecimal totalRevenueFromOrders = orderService.getTotalRevenueFromOrders();
+        BigDecimal averageOrderValue = orderService.getAverageOrderValue();
+
+        BigDecimal totalRevenueFromPayments = paymentService.getTotalRevenue();
+        Long totalCompletedPayments = paymentService.getTotalCompletedPayments();
+
+        model.addAttribute("orderCountsByStatus", orderService.getOrderCountsByStatus());
+        model.addAttribute("orderAmountsByStatus", orderService.getOrderAmountsByStatus());
+
+        model.addAttribute("paymentCountsByStatus", paymentService.getPaymentCountsByStatus());
+        model.addAttribute("paymentAmountsByStatus", paymentService.getPaymentAmountsByStatus());
+
+        model.addAttribute("totalOrders", totalOrders);
+        model.addAttribute("totalRevenueFromOrders", totalRevenueFromOrders);
+        model.addAttribute("totalRevenueFromPayments", totalRevenueFromPayments);
+        model.addAttribute("averageOrderValue", averageOrderValue);
+        model.addAttribute("totalCompletedPayments", totalCompletedPayments);
+        
+        return "admin-finance";
     }
 }
