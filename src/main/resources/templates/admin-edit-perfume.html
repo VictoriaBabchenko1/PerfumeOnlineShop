@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Access - Edit Perfume</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+<header th:replace="~{fragments/common-fragments :: navbar}"></header>
+
+<div class="d-flex justify-content-center align-items-center">
+    <div class="container mt-md-4 pb-5">
+        <h1>Admin Access - Edit Perfume</h1><br>
+        <form th:action="@{'/admin/perfume/edit'}" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="perfumeId" th:value="${perfume.id()}">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" name="title" th:value="${perfume.title()}" required>
+            </div>
+            <div class="mb-3">
+                <label for="brand" class="form-label">Brand</label>
+                <select class="form-select" id="brand" name="brand" required>
+                    <option value="Burberry" th:selected="${perfume.brand() == 'Burberry'}">Burberry</option>
+                    <option value="Bvlgari" th:selected="${perfume.brand() == 'Bvlgari'}">Bvlgari</option>
+                    <option value="Calvin Klein" th:selected="${perfume.brand() == 'Calvin Klein'}">Calvin Klein</option>
+                    <option value="Carolina Herrera" th:selected="${perfume.brand() == 'Carolina Herrera'}">Carolina Herrera</option>
+                    <option value="Chanel" th:selected="${perfume.brand() == 'Chanel'}">Chanel</option>
+                    <option value="Creed" th:selected="${perfume.brand() == 'Creed'}">Creed</option>
+                    <option value="Dior" th:selected="${perfume.brand() == 'Dior'}">Dior</option>
+                    <option value="Dolce&Gabbana" th:selected="${perfume.brand() == 'Dolce&Gabbana'}">Dolce&Gabbana</option>
+                    <option value="Este Lauder" th:selected="${perfume.brand() == 'Este Lauder'}">Este Lauder</option>
+                    <option value="Giorgio Armani" th:selected="${perfume.brand() == 'Giorgio Armani'}">Giorgio Armani</option>
+                    <option value="Givency" th:selected="${perfume.brand() == 'Givency'}">Givency</option>
+                    <option value="Gucci" th:selected="${perfume.brand() == 'Gucci'}">Gucci</option>
+                    <option value="Guerlain" th:selected="${perfume.brand() == 'Guerlain'}">Guerlain</option>
+                    <option value="Hermes" th:selected="${perfume.brand() == 'Hermes'}">Hermes</option>
+                    <option value="Hugo Boss" th:selected="${perfume.brand() == 'Hugo Boss'}">Hugo Boss</option>
+                    <option value="Jean Paul Gaultier" th:selected="${perfume.brand() == 'Jean Paul Gaultier'}">Jean Paul Gaultier</option>
+                    <option value="Lancome" th:selected="${perfume.brand() == 'Lancome'}">Lancome</option>
+                    <option value="Nina Ricci" th:selected="${perfume.brand() == 'Nina Ricci'}">Nina Ricci</option>
+                    <option value="Paco Rabanne" th:selected="${perfume.brand() == 'Paco Rabanne'}">Paco Rabanne</option>
+                    <option value="Prada" th:selected="${perfume.brand() == 'Prada'}">Prada</option>
+                    <option value="Tom Ford" th:selected="${perfume.brand() == 'Tom Ford'}">Tom Ford</option>
+                    <option value="Valentino" th:selected="${perfume.brand() == 'Valentino'}">Valentino</option>
+                    <option value="Versace" th:selected="${perfume.brand() == 'Versace'}">Versace</option>
+                    <option value="Victoria`s Secret" th:selected="${perfume.brand() == 'Victoria`s Secret'}">Victoria`s Secret</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Image (leave empty to keep current image)</label>
+                <input type="file" class="form-control" id="image" name="image" accept="image/*">
+            </div>
+            <div class="mb-3">
+                <label for="year" class="form-label">Year</label>
+                <input type="number" class="form-control" id="year" name="year" th:value="${perfume.year()}" required>
+            </div>
+            <div class="mb-3">
+                <label for="country" class="form-label">Country</label>
+                <input type="text" class="form-control" id="country" name="country" th:value="${perfume.country()}" required>
+            </div>
+            <div class="mb-3">
+                <label for="gender" class="form-label">Gender</label>
+                <select class="form-select" id="gender" name="gender" required>
+                    <option value="female" th:selected="${perfume.gender() == 'female'}">Female</option>
+                    <option value="male" th:selected="${perfume.gender() == 'male'}">Male</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3" th:text="${perfume.description()}" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="text" class="form-control" id="price" name="price" th:value="${perfume.price()}" required>
+            </div>
+            <div class="mb-3">
+                <label for="volume" class="form-label">Volume</label>
+                <input type="text" class="form-control" id="volume" name="volume" th:value="${perfume.volume()}" required>
+            </div>
+            <div class="mb-3">
+                <label for="type" class="form-label">Type</label>
+                <input type="text" class="form-control" id="type" name="type" th:value="${perfume.type()}" required>
+            </div>
+            <div class="mb-3">
+                <label for="fragranceNotes" class="form-label">Fragrance Notes</label>
+                <textarea class="form-control" id="fragranceNotes" name="fragranceNotes" rows="3" th:text="${perfume.fragranceNotes()}" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Perfume</button>
+            <a th:href="@{'/admin/perfumes'}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/common-fragments :: footer}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

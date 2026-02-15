@@ -44,10 +44,13 @@
             <td th:text="${perfume.volume}"></td>
             <td th:text="${perfume.type}"></td>
             <td>
+                <div class="d-inline-block me-2">
+                    <a th:href="@{'/admin/perfume/edit?perfumeId=' + ${perfume.id}}" class="btn btn-primary">Edit</a>
+                </div>
                 <div class="d-inline-block">
-                    <form th:action="@{'/admin/perfumes/delete'}" method="post">
+                    <form th:action="@{'/admin/perfumes/delete'}" method="post" class="d-inline">
                         <input type="hidden" name="perfumeId" th:value="${perfume.id}"/>
-                        <button type="button" class="btn btn-danger" onclick="showConfirmDeleteModal()">Delete</button>
+                        <button type="button" class="btn btn-danger" onclick="showConfirmDeleteModal(this)">Delete</button>
                     </form>
                 </div>
             </td>
@@ -79,13 +82,14 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
 <script>
-    function showConfirmDeleteModal() {
+    function showConfirmDeleteModal(button) {
         var modal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
         modal.show();
 
-        document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
-            document.querySelector('form[action="/admin/perfumes/delete"]').submit();
-        });
+        var form = button.closest('form');
+        document.getElementById('confirmDeleteBtn').onclick = function() {
+            form.submit();
+        };
     }
 </script>
 </body>

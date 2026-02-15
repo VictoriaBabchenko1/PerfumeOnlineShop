@@ -35,6 +35,22 @@ public class PerfumeService {
         return "New perfume successfully saved";
     }
 
+    public String updatePerfume(Long id, Perfume perfume, MultipartFile image) {
+        perfumeRepository.updatePerfume(id, perfume);
+
+        if (image != null && !image.isEmpty()) {
+            String imageName = perfume.brand().replaceAll("\\s+", "") + perfume.title().replaceAll("\\s+", "") + ".png";
+            String uploadDir = "Coursework/src/main/resources/static/images/perfumes";
+            try {
+                FileUploadUtils.saveFile(uploadDir, imageName, image);
+            } catch (IOException e) {
+                logger.error("An error occurred while updating the perfume image: {}", e.getMessage());
+            }
+        }
+
+        return "Perfume with code " + id + " successfully updated";
+    }
+
     public String deletePerfume(Long id) {
         perfumeRepository.deletePerfume(id);
 

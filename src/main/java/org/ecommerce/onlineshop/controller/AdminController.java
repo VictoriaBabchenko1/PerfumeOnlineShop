@@ -71,6 +71,37 @@ public class AdminController {
         return "admin-add-perfume";
     }
 
+    @GetMapping("/admin/perfume/edit")
+    public String showEditPerfumeForm(@RequestParam Long perfumeId, Model model) {
+        Perfume perfume = perfumeService.getPerfumeById(perfumeId);
+        model.addAttribute("perfume", perfume);
+        return "admin-edit-perfume";
+    }
+
+    @PostMapping("/admin/perfume/edit")
+    public String editPerfume(@RequestParam Long perfumeId,
+                             @RequestParam String title,
+                             @RequestParam String brand,
+                             @RequestParam(value = "image", required = false) MultipartFile image,
+                             @RequestParam String year,
+                             @RequestParam String country,
+                             @RequestParam String gender,
+                             @RequestParam String description,
+                             @RequestParam String price,
+                             @RequestParam String volume,
+                             @RequestParam String type,
+                             @RequestParam String fragranceNotes,
+                             Model model) {
+        Perfume perfume = new Perfume(title, brand, Integer.parseInt(year), country,
+            gender, description, new BigDecimal(price), Integer.parseInt(volume), type, fragranceNotes);
+        String message = perfumeService.updatePerfume(perfumeId, perfume, image);
+
+        model.addAttribute("message", message);
+        model.addAttribute("perfumes", perfumeService.getAllPerfumes());
+
+        return "admin-perfumes";
+    }
+
     @PostMapping("/admin/perfume/add")
     public String addPerfume(@RequestParam String title,
                              @RequestParam String brand,

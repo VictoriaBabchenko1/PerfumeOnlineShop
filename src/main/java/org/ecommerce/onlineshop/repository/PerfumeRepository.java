@@ -40,6 +40,31 @@ public class PerfumeRepository {
         jdbcTemplate.update(query, params);
     }
 
+    public void updatePerfume(Long id, Perfume perfume) {
+        String query = """
+            UPDATE perfumes 
+            SET title = :title, brand = :brand, year = :year, country = :country, 
+                description = :description, gender = :gender, price = :price, 
+                type = :type, volume = :volume, fragrance_notes = :fragrance_notes
+            WHERE id = :id
+            """;
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", id);
+        params.addValue("title", perfume.title());
+        params.addValue("brand", perfume.brand());
+        params.addValue("year", perfume.year());
+        params.addValue("country", perfume.country());
+        params.addValue("description", perfume.description());
+        params.addValue("gender", perfume.gender());
+        params.addValue("price", perfume.price());
+        params.addValue("type", perfume.type());
+        params.addValue("volume", perfume.volume());
+        params.addValue("fragrance_notes", perfume.fragranceNotes());
+
+        jdbcTemplate.update(query, params);
+    }
+
     public void deletePerfume(Long id) {
         String query = "DELETE FROM perfumes WHERE id = :id";
         MapSqlParameterSource params = new MapSqlParameterSource("id", id);
